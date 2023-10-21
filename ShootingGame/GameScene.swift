@@ -17,6 +17,7 @@ class GameScene: SKScene {
     var meteorInterval: TimeInterval = 2.0
     
     var player: Player!
+    var prevLocation: CGPoint!
     
     override func didMove(to view: SKView) {
         guard let starfield = SKEmitterNode(fileNamed: "starfield") else { return }
@@ -71,13 +72,21 @@ class GameScene: SKScene {
         if let touch = touches.first {
             location = touch.location(in: self)
         }
-        let xMover = SKAction.moveTo(x: location.x, duration: 0.05)
-        let yMover = SKAction.moveTo(y: location.y, duration: 0.05)
-        self.player.run(SKAction.group([xMover, yMover]))
+        let offsetX = location.x - prevLocation.x
+        let offsetY = location.y - prevLocation.y
+        if player.position.x + offsetX > size.width || player.position.x + offsetX < 0 || player.position.y + offsetY > size.height || player.position.y + offsetY < 0 {
+            print("bypass")
+        } else {
+            let xMover = SKAction.moveBy(x: offsetX, y: offsetY, duration: 0.02)
+            self.player.run(SKAction.group([xMover]))
+        }
+        
+        prevLocation = touches.first?.location(in: self)
         
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        prevLocation = touches.first?.location(in: self)
         playerFire()
     }
 }
