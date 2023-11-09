@@ -16,6 +16,7 @@ struct Layer {
     static let meteor: CGFloat = 1
     static let playerMissile: CGFloat = 10
     static let player: CGFloat = 11
+    static let enemy: CGFloat = 12
 }
 
 struct Atlas {

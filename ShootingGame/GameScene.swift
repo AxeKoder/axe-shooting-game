@@ -13,8 +13,14 @@ class GameScene: SKScene {
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     
+    var fireTimer = Timer()
+    var fireInterval: TimeInterval = 0.3
+    
     var meteorTimer = Timer()
     var meteorInterval: TimeInterval = 2.0
+    
+    var enemyTimer = Timer()
+    var enemyInterval: TimeInterval = 1.2
     
     var player: Player!
     var prevLocation: CGPoint!
@@ -26,7 +32,10 @@ class GameScene: SKScene {
         starfield.advanceSimulationTime(30)
         addChild(starfield)
         
+        
+        fireTimer = setTimer(interval: fireInterval, function: playerFire)
         meteorTimer = setTimer(interval: meteorInterval, function: addMeteor)
+        enemyTimer = setTimer(interval: enemyInterval, function: addEnemy)
         
         player = Player(screenSize: self.size)
         player.position = CGPoint(x: size.width / 2, y: player.size.height * 2)
@@ -52,6 +61,24 @@ class GameScene: SKScene {
         let removeAct = SKAction.removeFromParent()
         
         meteor.run(SKAction.sequence([moveWithRotateAct, removeAct]))
+    }
+    
+    func addEnemy() {
+        let randEnemy = arc4random_uniform(UInt32(3)) + 1
+        let randXPos = player.size.width / 2 + CGFloat(arc4random_uniform(UInt32(size.width - player.size.width / 2)))
+        let randSpeed = TimeInterval(arc4random_uniform(UInt32(3)) + 3)
+        
+        let texture = Atlas.gameobjects.textureNamed("enemy\(randEnemy)")
+        let enemy = SKSpriteNode(texture: texture)
+        enemy.name = "enemy"
+        enemy.position = .init(x: randXPos, y: size.height + enemy.size.height)
+        enemy.zPosition = Layer.enemy
+        
+        addChild(enemy)
+        
+        let moveAct = SKAction.moveTo(y: -enemy.size.height, duration: randSpeed)
+        let removeAct = SKAction.removeFromParent()
+        enemy.run(SKAction.sequence([moveAct, removeAct]))
     }
     
     func setTimer(interval: TimeInterval, function: @escaping () -> Void ) -> Timer {
@@ -87,6 +114,5 @@ class GameScene: SKScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         prevLocation = touches.first?.location(in: self)
-        playerFire()
     }
 }
