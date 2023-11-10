@@ -9,9 +9,12 @@ import SpriteKit
 
 struct Particle {
     static let starfield = "starfield"
+    static let playerThruster = "playerThruster"
+    static let enemyThruster = "enemyThruster"
 }
 
 struct Layer {
+    static let sub: CGFloat = -0.1
     static let starfield: CGFloat = 0
     static let meteor: CGFloat = 1
     static let playerMissile: CGFloat = 10

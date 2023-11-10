@@ -15,6 +15,16 @@ final class Player: SKSpriteNode {
         let playerTexture = Atlas.gameobjects.textureNamed("player")
         super.init(texture: playerTexture, color: SKColor.clear, size: playerTexture.size())
         self.zPosition = Layer.player
+        
+        // Add Thruster
+        guard let thruster = SKEmitterNode(fileNamed: Particle.playerThruster) else { return }
+        thruster.position.y -= size.height / 2
+        thruster.zPosition = Layer.sub
+        
+        // Fix Alpha blending
+        let thrusterEffectNode = SKEffectNode()
+        thrusterEffectNode.addChild(thruster)
+        addChild(thrusterEffectNode)
     }
     
     required init?(coder aDecoder: NSCoder) {

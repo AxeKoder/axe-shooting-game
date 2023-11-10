@@ -18,6 +18,8 @@
 		49883FF72ADFB768005A6511 /* starfield.sks in Resources */ = {isa = PBXBuildFile; fileRef = 49883FF62ADFB768005A6511 /* starfield.sks */; };
 		49883FF92ADFCDA1005A6511 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49883FF82ADFCDA1005A6511 /* Constants.swift */; };
 		49883FFB2ADFD43E005A6511 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49883FFA2ADFD43E005A6511 /* Player.swift */; };
+		499D134C2AFC938100F887B5 /* playerThruster.sks in Resources */ = {isa = PBXBuildFile; fileRef = 499D134B2AFC938100F887B5 /* playerThruster.sks */; };
+		499D134E2AFC94D300F887B5 /* enemyThruster.sks in Resources */ = {isa = PBXBuildFile; fileRef = 499D134D2AFC94D300F887B5 /* enemyThruster.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +35,8 @@
 		49883FF62ADFB768005A6511 /* starfield.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = starfield.sks; sourceTree = "<group>"; };
 		49883FF82ADFCDA1005A6511 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		49883FFA2ADFD43E005A6511 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		499D134B2AFC938100F887B5 /* playerThruster.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = playerThruster.sks; sourceTree = "<group>"; };
+		499D134D2AFC94D300F887B5 /* enemyThruster.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = enemyThruster.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,11 +75,13 @@
 				49883FE32ADFAA31005A6511 /* Actions.sks */,
 				49883FE72ADFAA31005A6511 /* GameViewController.swift */,
 				49883FE52ADFAA31005A6511 /* GameScene.swift */,
+				49883FFA2ADFD43E005A6511 /* Player.swift */,
 				49883FE92ADFAA31005A6511 /* Main.storyboard */,
 				49883FEC2ADFAA33005A6511 /* Assets.xcassets */,
 				49883FEE2ADFAA33005A6511 /* LaunchScreen.storyboard */,
 				49883FF62ADFB768005A6511 /* starfield.sks */,
-				49883FFA2ADFD43E005A6511 /* Player.swift */,
+				499D134B2AFC938100F887B5 /* playerThruster.sks */,
+				499D134D2AFC94D300F887B5 /* enemyThruster.sks */,
 			);
 			path = ShootingGame;
 			sourceTree = "<group>";
@@ -141,9 +147,11 @@
 				49883FEB2ADFAA31005A6511 /* Main.storyboard in Resources */,
 				49883FE22ADFAA31005A6511 /* GameScene.sks in Resources */,
 				49883FED2ADFAA33005A6511 /* Assets.xcassets in Resources */,
+				499D134C2AFC938100F887B5 /* playerThruster.sks in Resources */,
 				49883FF02ADFAA33005A6511 /* LaunchScreen.storyboard in Resources */,
 				49883FF72ADFB768005A6511 /* starfield.sks in Resources */,
 				49883FE42ADFAA31005A6511 /* Actions.sks in Resources */,
+				499D134E2AFC94D300F887B5 /* enemyThruster.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
