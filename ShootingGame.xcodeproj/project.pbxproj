@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		493A4DE42B0DB735007302A1 /* explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 493A4DE32B0DB735007302A1 /* explosion.sks */; };
+		493A4DE62B0DB7F5007302A1 /* hit.sks in Resources */ = {isa = PBXBuildFile; fileRef = 493A4DE52B0DB7F5007302A1 /* hit.sks */; };
 		49883FE02ADFAA31005A6511 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49883FDF2ADFAA31005A6511 /* AppDelegate.swift */; };
 		49883FE22ADFAA31005A6511 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 49883FE12ADFAA31005A6511 /* GameScene.sks */; };
 		49883FE42ADFAA31005A6511 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 49883FE32ADFAA31005A6511 /* Actions.sks */; };
@@ -23,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		493A4DE32B0DB735007302A1 /* explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = explosion.sks; sourceTree = "<group>"; };
+		493A4DE52B0DB7F5007302A1 /* hit.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = hit.sks; sourceTree = "<group>"; };
 		49883FDC2ADFAA31005A6511 /* ShootingGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShootingGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49883FDF2ADFAA31005A6511 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49883FE12ADFAA31005A6511 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -82,6 +86,8 @@
 				49883FF62ADFB768005A6511 /* starfield.sks */,
 				499D134B2AFC938100F887B5 /* playerThruster.sks */,
 				499D134D2AFC94D300F887B5 /* enemyThruster.sks */,
+				493A4DE32B0DB735007302A1 /* explosion.sks */,
+				493A4DE52B0DB7F5007302A1 /* hit.sks */,
 			);
 			path = ShootingGame;
 			sourceTree = "<group>";
@@ -145,8 +151,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				49883FEB2ADFAA31005A6511 /* Main.storyboard in Resources */,
+				493A4DE62B0DB7F5007302A1 /* hit.sks in Resources */,
 				49883FE22ADFAA31005A6511 /* GameScene.sks in Resources */,
 				49883FED2ADFAA33005A6511 /* Assets.xcassets in Resources */,
+				493A4DE42B0DB735007302A1 /* explosion.sks in Resources */,
 				499D134C2AFC938100F887B5 /* playerThruster.sks in Resources */,
 				49883FF02ADFAA33005A6511 /* LaunchScreen.storyboard in Resources */,
 				49883FF72ADFB768005A6511 /* starfield.sks in Resources */,
