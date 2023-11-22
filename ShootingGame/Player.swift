@@ -16,6 +16,15 @@ final class Player: SKSpriteNode {
         super.init(texture: playerTexture, color: SKColor.clear, size: playerTexture.size())
         self.zPosition = Layer.player
         
+        // Add Physics body
+        self.physicsBody = SKPhysicsBody(
+            rectangleOf: CGSize(width: size.width / 3, height: size.height / 3),
+            center: CGPoint(x: 0, y: 0)
+        )
+        self.physicsBody?.categoryBitMask = PhysicsCategory.player
+        self.physicsBody?.contactTestBitMask = PhysicsCategory.enemy | PhysicsCategory.meteor
+        self.physicsBody?.collisionBitMask = 0
+        
         // Add Thruster
         guard let thruster = SKEmitterNode(fileNamed: Particle.playerThruster) else { return }
         thruster.position.y -= size.height / 2
@@ -37,6 +46,13 @@ final class Player: SKSpriteNode {
         missile.position = position
         missile.position.y += size.height
         missile.zPosition = Layer.playerMissile
+        
+        // Add physicsBody
+        missile.physicsBody = SKPhysicsBody(rectangleOf: missile.size)
+        missile.physicsBody?.categoryBitMask = PhysicsCategory.missile
+        missile.physicsBody?.contactTestBitMask = PhysicsCategory.enemy | PhysicsCategory.meteor
+        missile.physicsBody?.collisionBitMask = 0
+        missile.physicsBody?.usesPreciseCollisionDetection = true
         return missile
     }
     

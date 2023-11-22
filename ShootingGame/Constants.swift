@@ -25,3 +25,10 @@ struct Layer {
 struct Atlas {
     static let gameobjects = SKTextureAtlas(named: "Gameobjects")
 }
+
+struct PhysicsCategory {
+    static let player: UInt32 = 0x1 << 0
+    static let missile: UInt32 = 0x1 << 2
+    static let enemy: UInt32 = 0x1 << 3
+    static let meteor: UInt32 = 0x1 << 6
+}

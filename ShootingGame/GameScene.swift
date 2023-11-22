@@ -26,6 +26,10 @@ class GameScene: SKScene {
     var prevLocation: CGPoint!
     
     override func didMove(to view: SKView) {
+        // Set gravity
+        self.physicsWorld.contactDelegate = self
+        self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
+        
         guard let starfield = SKEmitterNode(fileNamed: "starfield") else { return }
         starfield.position = CGPoint(x: size.width / 2, y: size.height)
         starfield.zPosition = 0
@@ -53,6 +57,12 @@ class GameScene: SKScene {
         meteor.position = CGPoint(x: randomXPos, y: size.height + meteor.size.height)
         meteor.zPosition = Layer.meteor
         
+        // Add physicsBody
+        meteor.physicsBody = SKPhysicsBody(texture: texture, size: meteor.size)
+        meteor.physicsBody?.categoryBitMask = PhysicsCategory.meteor
+        meteor.physicsBody?.contactTestBitMask = 0
+        meteor.physicsBody?.collisionBitMask = 0
+        
         addChild(meteor)
         
         let moveAct = SKAction.moveTo(y: -meteor.size.height, duration: randomSpeed)
@@ -75,6 +85,12 @@ class GameScene: SKScene {
         enemy.zPosition = Layer.enemy
         
         addChild(enemy)
+        
+        // Add physicsBody
+        enemy.physicsBody = SKPhysicsBody(circleOfRadius: enemy.size.height / 2)
+        enemy.physicsBody?.categoryBitMask = PhysicsCategory.enemy
+        enemy.physicsBody?.contactTestBitMask = 0
+        enemy.physicsBody?.collisionBitMask = 0
         
         // add thruster
         guard let thruster = SKEmitterNode(fileNamed: Particle.enemyThruster) else { return }
@@ -121,5 +137,33 @@ class GameScene: SKScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         prevLocation = touches.first?.location(in: self)
+    }
+}
+
+extension GameScene: SKPhysicsContactDelegate {
+    func didBegin(_ contact: SKPhysicsContact) {
+        var firstBody = SKPhysicsBody()
+        var secondBody = SKPhysicsBody()
+        
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            firstBody = contact.bodyA
+            secondBody = contact.bodyB
+        } else {
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
+        }
+        
+        if firstBody.categoryBitMask == PhysicsCategory.player && secondBody.categoryBitMask == PhysicsCategory.meteor {
+            print("player and meteor!")
+        }
+        if firstBody.categoryBitMask == PhysicsCategory.player && secondBody.categoryBitMask == PhysicsCategory.enemy {
+            print("player and enemy!")
+        }
+        if firstBody.categoryBitMask == PhysicsCategory.missile && secondBody.categoryBitMask == PhysicsCategory.meteor {
+            print("missile and meteor!")
+        }
+        if firstBody.categoryBitMask == PhysicsCategory.missile && secondBody.categoryBitMask == PhysicsCategory.enemy {
+            print("missile and enemy!")
+        }
     }
 }
