@@ -25,6 +25,8 @@ class GameScene: SKScene {
     var player: Player!
     var prevLocation: CGPoint!
     
+    var cameraNode = SKCameraNode()
+    
     override func didMove(to view: SKView) {
         // Set gravity
         self.physicsWorld.contactDelegate = self
@@ -36,7 +38,6 @@ class GameScene: SKScene {
         starfield.advanceSimulationTime(30)
         addChild(starfield)
         
-        
         fireTimer = setTimer(interval: fireInterval, function: playerFire)
         meteorTimer = setTimer(interval: meteorInterval, function: addMeteor)
         enemyTimer = setTimer(interval: enemyInterval, function: addEnemy)
@@ -44,6 +45,12 @@ class GameScene: SKScene {
         player = Player(screenSize: self.size)
         player.position = CGPoint(x: size.width / 2, y: player.size.height * 2)
         addChild(player)
+        
+        // Add camera
+        self.camera = cameraNode
+        cameraNode.position.x = size.width / 2
+        cameraNode.position.y = size.height / 2
+        addChild(cameraNode)
     }
     
     func addMeteor() {
@@ -112,9 +119,43 @@ class GameScene: SKScene {
     }
     
     func playerFire() {
-        let missile = self.player.createMissile()
+        let missile = player.createMissile()
         addChild(missile)
-        self.player.fireMissile(missile: missile)
+        player.fireMissile(missile: missile)
+    }
+    
+    func explosion(targetNode: SKSpriteNode, isSmall: Bool) {
+        let particle: String!
+        if isSmall {
+            particle = Particle.hit
+        } else {
+            particle = Particle.explosion
+        }
+        guard let explosion = SKEmitterNode(fileNamed: particle) else { return }
+        explosion.position = targetNode.position
+        explosion.zPosition = targetNode.zPosition
+        addChild(explosion)
+        run(SKAction.wait(forDuration: 2)) {
+            explosion.removeFromParent()
+        }
+    }
+    
+    func playerDamageEffect() {
+        let flashNode = SKSpriteNode(color: .red, size: size)
+        flashNode.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        flashNode.zPosition = Layer.hud
+        addChild(flashNode)
+        flashNode.run(SKAction.sequence([
+            SKAction.wait(forDuration: 0.01),
+            SKAction.removeFromParent()
+        ]))
+        
+        let moveLeft = SKAction.moveTo(x: size.width / 2 - 5, duration: 0.1)
+        let moveRight = SKAction.moveTo(x: size.width / 2 + 5, duration: 0.1)
+        let moveCenter = SKAction.moveTo(x: size.width / 2, duration: 0.1)
+        let shakeAction = SKAction.sequence([moveLeft, moveRight, moveLeft, moveRight, moveCenter])
+        shakeAction.timingMode = .easeInEaseOut
+        cameraNode.run(shakeAction)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -155,15 +196,35 @@ extension GameScene: SKPhysicsContactDelegate {
         
         if firstBody.categoryBitMask == PhysicsCategory.player && secondBody.categoryBitMask == PhysicsCategory.meteor {
             print("player and meteor!")
+            
+            guard let targetNode = secondBody.node as? SKSpriteNode else { return }
+            explosion(targetNode: targetNode, isSmall: false)
+            targetNode.removeFromParent()
+            playerDamageEffect()
         }
         if firstBody.categoryBitMask == PhysicsCategory.player && secondBody.categoryBitMask == PhysicsCategory.enemy {
             print("player and enemy!")
+            
+            guard let targetNode = secondBody.node as? SKSpriteNode else { return }
+            explosion(targetNode: targetNode, isSmall: true)
+            targetNode.removeFromParent()
+            playerDamageEffect()
         }
         if firstBody.categoryBitMask == PhysicsCategory.missile && secondBody.categoryBitMask == PhysicsCategory.meteor {
             print("missile and meteor!")
+            
+            guard let targetNode = secondBody.node as? SKSpriteNode else { return }
+            explosion(targetNode: targetNode, isSmall: false)
+            targetNode.removeFromParent()
+            firstBody.node?.removeFromParent()
         }
         if firstBody.categoryBitMask == PhysicsCategory.missile && secondBody.categoryBitMask == PhysicsCategory.enemy {
             print("missile and enemy!")
+            
+            guard let targetNode = secondBody.node as? SKSpriteNode else { return }
+            explosion(targetNode: targetNode, isSmall: true)
+            targetNode.removeFromParent()
+            firstBody.node?.removeFromParent()
         }
     }
 }

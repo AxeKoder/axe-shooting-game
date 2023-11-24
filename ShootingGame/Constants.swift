@@ -11,6 +11,8 @@ struct Particle {
     static let starfield = "starfield"
     static let playerThruster = "playerThruster"
     static let enemyThruster = "enemyThruster"
+    static let explosion = "explosion"
+    static let hit = "hit"
 }
 
 struct Layer {
@@ -20,6 +22,7 @@ struct Layer {
     static let playerMissile: CGFloat = 10
     static let player: CGFloat = 11
     static let enemy: CGFloat = 12
+    static let hud: CGFloat = 30
 }
 
 struct Atlas {
