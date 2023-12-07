@@ -20,6 +20,8 @@
 		49883FF72ADFB768005A6511 /* starfield.sks in Resources */ = {isa = PBXBuildFile; fileRef = 49883FF62ADFB768005A6511 /* starfield.sks */; };
 		49883FF92ADFCDA1005A6511 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49883FF82ADFCDA1005A6511 /* Constants.swift */; };
 		49883FFB2ADFD43E005A6511 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49883FFA2ADFD43E005A6511 /* Player.swift */; };
+		49981E522B21765400329895 /* Hud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49981E512B21765400329895 /* Hud.swift */; };
+		49981E542B21799500329895 /* Minercraftory.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 49981E532B21799500329895 /* Minercraftory.ttf */; };
 		499D134C2AFC938100F887B5 /* playerThruster.sks in Resources */ = {isa = PBXBuildFile; fileRef = 499D134B2AFC938100F887B5 /* playerThruster.sks */; };
 		499D134E2AFC94D300F887B5 /* enemyThruster.sks in Resources */ = {isa = PBXBuildFile; fileRef = 499D134D2AFC94D300F887B5 /* enemyThruster.sks */; };
 /* End PBXBuildFile section */
@@ -39,6 +41,9 @@
 		49883FF62ADFB768005A6511 /* starfield.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = starfield.sks; sourceTree = "<group>"; };
 		49883FF82ADFCDA1005A6511 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		49883FFA2ADFD43E005A6511 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		49981E512B21765400329895 /* Hud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hud.swift; sourceTree = "<group>"; };
+		49981E532B21799500329895 /* Minercraftory.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Minercraftory.ttf; sourceTree = "<group>"; };
+		49981E572B217AB200329895 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		499D134B2AFC938100F887B5 /* playerThruster.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = playerThruster.sks; sourceTree = "<group>"; };
 		499D134D2AFC94D300F887B5 /* enemyThruster.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = enemyThruster.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -73,13 +78,15 @@
 		49883FDE2ADFAA31005A6511 /* ShootingGame */ = {
 			isa = PBXGroup;
 			children = (
-				49883FF82ADFCDA1005A6511 /* Constants.swift */,
-				49883FDF2ADFAA31005A6511 /* AppDelegate.swift */,
+				49981E572B217AB200329895 /* Info.plist */,
 				49883FE12ADFAA31005A6511 /* GameScene.sks */,
 				49883FE32ADFAA31005A6511 /* Actions.sks */,
+				49883FF82ADFCDA1005A6511 /* Constants.swift */,
+				49883FDF2ADFAA31005A6511 /* AppDelegate.swift */,
 				49883FE72ADFAA31005A6511 /* GameViewController.swift */,
 				49883FE52ADFAA31005A6511 /* GameScene.swift */,
 				49883FFA2ADFD43E005A6511 /* Player.swift */,
+				49981E512B21765400329895 /* Hud.swift */,
 				49883FE92ADFAA31005A6511 /* Main.storyboard */,
 				49883FEC2ADFAA33005A6511 /* Assets.xcassets */,
 				49883FEE2ADFAA33005A6511 /* LaunchScreen.storyboard */,
@@ -88,6 +95,7 @@
 				499D134D2AFC94D300F887B5 /* enemyThruster.sks */,
 				493A4DE32B0DB735007302A1 /* explosion.sks */,
 				493A4DE52B0DB7F5007302A1 /* hit.sks */,
+				49981E532B21799500329895 /* Minercraftory.ttf */,
 			);
 			path = ShootingGame;
 			sourceTree = "<group>";
@@ -155,6 +163,7 @@
 				49883FE22ADFAA31005A6511 /* GameScene.sks in Resources */,
 				49883FED2ADFAA33005A6511 /* Assets.xcassets in Resources */,
 				493A4DE42B0DB735007302A1 /* explosion.sks in Resources */,
+				49981E542B21799500329895 /* Minercraftory.ttf in Resources */,
 				499D134C2AFC938100F887B5 /* playerThruster.sks in Resources */,
 				49883FF02ADFAA33005A6511 /* LaunchScreen.storyboard in Resources */,
 				49883FF72ADFB768005A6511 /* starfield.sks in Resources */,
@@ -175,6 +184,7 @@
 				49883FE02ADFAA31005A6511 /* AppDelegate.swift in Sources */,
 				49883FFB2ADFD43E005A6511 /* Player.swift in Sources */,
 				49883FF92ADFCDA1005A6511 /* Constants.swift in Sources */,
+				49981E522B21765400329895 /* Hud.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,6 +333,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K56Y5ZYVB7;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShootingGame/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -352,6 +363,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K56Y5ZYVB7;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShootingGame/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

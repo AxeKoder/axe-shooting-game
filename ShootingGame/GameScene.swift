@@ -27,6 +27,8 @@ class GameScene: SKScene {
     
     var cameraNode = SKCameraNode()
     
+    let hud = Hud()
+    
     override func didMove(to view: SKView) {
         // Set gravity
         self.physicsWorld.contactDelegate = self
@@ -37,6 +39,9 @@ class GameScene: SKScene {
         starfield.zPosition = 0
         starfield.advanceSimulationTime(30)
         addChild(starfield)
+        
+        hud.createHud(screenSize: size)
+        addChild(hud)
         
         fireTimer = setTimer(interval: fireInterval, function: playerFire)
         meteorTimer = setTimer(interval: meteorInterval, function: addMeteor)
@@ -209,6 +214,7 @@ extension GameScene: SKPhysicsContactDelegate {
             explosion(targetNode: targetNode, isSmall: true)
             targetNode.removeFromParent()
             playerDamageEffect()
+            hud.subtractLive()
         }
         if firstBody.categoryBitMask == PhysicsCategory.missile && secondBody.categoryBitMask == PhysicsCategory.meteor {
             print("missile and meteor!")
@@ -225,6 +231,8 @@ extension GameScene: SKPhysicsContactDelegate {
             explosion(targetNode: targetNode, isSmall: true)
             targetNode.removeFromParent()
             firstBody.node?.removeFromParent()
+            
+            hud.score += 10
         }
     }
 }
