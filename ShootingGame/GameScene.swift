@@ -27,7 +27,10 @@ class GameScene: SKScene {
     
     var cameraNode = SKCameraNode()
     
+    var isBossOnScreen = false
+    
     let hud = Hud()
+    var boss: Boss?
     
     override func didMove(to view: SKView) {
         // Set gravity
@@ -56,6 +59,8 @@ class GameScene: SKScene {
         cameraNode.position.x = size.width / 2
         cameraNode.position.y = size.height / 2
         addChild(cameraNode)
+        
+
     }
     
     func addMeteor() {
@@ -230,6 +235,51 @@ extension GameScene: SKPhysicsContactDelegate {
             firstBody.node?.removeFromParent()
             
             hud.score += 10
+        }
+        
+        if firstBody.categoryBitMask == PhysicsCategory.missile && secondBody.categoryBitMask == PhysicsCategory.boss {
+            guard let targetNode = firstBody.node as? SKSpriteNode else { return }
+            explosion(targetNode: targetNode, isSmall: true)
+            targetNode.removeFromParent()
+            
+            guard let boss = boss else { return }
+            boss.shootCount += 10
+            print(boss.shootCount)
+            
+            if boss.shootCount > boss.maxHp {
+//                let damageTexture = boss.createDamagaTexture()
+//                boss.addChild(damageTexture)
+                print("boss defeated")
+            } else if boss.shootCount >= Int(Double(boss.maxHp) * 0.6) {
+                print("boss HP left 40%")
+                
+                if boss.bossState == .secondStep {
+                    boss.bossState = .thirdStep
+                } else { return }
+            } else if boss.shootCount >= Int(Double(boss.maxHp) * 0.2) {
+                print("boss HP left 80%")
+                if boss.bossState == .firstStep {
+                    boss.bossState = .secondStep
+                } else { return }
+            }
+        }
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        if isBossOnScreen {
+            return
+        } else if hud.score >= 350 {
+            boss = Boss(screenSize: size, level: 2)
+            guard let boss = boss else { return }
+            addChild(boss)
+            boss.appear()
+            isBossOnScreen = true
+        } else if hud.score >= 50 {
+            boss = Boss(screenSize: size, level: 1)
+            guard let boss = boss else { return }
+            addChild(boss)
+            boss.appear()
+            isBossOnScreen = true
         }
     }
 }
