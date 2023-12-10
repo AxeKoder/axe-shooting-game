@@ -168,14 +168,11 @@ class GameScene: SKScene {
         if let touch = touches.first {
             location = touch.location(in: self)
         }
-        let offsetX = location.x - prevLocation.x
-        let offsetY = location.y - prevLocation.y
-        if player.position.x + offsetX > size.width || player.position.x + offsetX < 0 || player.position.y + offsetY > size.height || player.position.y + offsetY < 0 {
-            print("bypass")
-        } else {
-            let xMover = SKAction.moveBy(x: offsetX, y: offsetY, duration: 0.02)
-            self.player.run(SKAction.group([xMover]))
-        }
+        
+        let offsetX = max(min(player.position.x + location.x - prevLocation.x, size.width), 0)
+        let offsetY = max(min(player.position.y + location.y - prevLocation.y, size.height), 0)
+        let xMover = SKAction.move(to: CGPoint(x: offsetX, y: offsetY), duration: 0)
+        self.player.run(SKAction.group([xMover]))
         
         prevLocation = touches.first?.location(in: self)
         
