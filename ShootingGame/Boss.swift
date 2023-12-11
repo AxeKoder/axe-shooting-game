@@ -21,12 +21,18 @@ final class Boss: SKSpriteNode {
     let maxHp: Int!
     var shootCount: Int = 0
     
+    var infiniteMoveRL1 = SKAction()
+    var infiniteMoveRL2 = SKAction()
+    
     var bossState: BossState! {
         didSet {
             if bossState == .secondStep {
                 print(bossState as Any)
+                run(infiniteMoveRL1)
             } else if bossState == .thirdStep {
                 print(bossState as Any)
+                run(infiniteMoveRL2)
+                addChild(createDamagaTexture())
             }
         }
     }
@@ -36,6 +42,7 @@ final class Boss: SKSpriteNode {
         self.level = level
         self.maxHp = bossHp[level - 1]
         let texture = Atlas.gameobjects.textureNamed(String(format: "boss%d", level))
+        bossState = .firstStep
         
         super.init(texture: texture, color: .clear, size: texture.size())
         
@@ -47,6 +54,8 @@ final class Boss: SKSpriteNode {
         
         position.x = screenSize.width / 2
         position.y = screenSize.height + texture.size().height
+        
+        createActions()
     }
     
     func appear() {
@@ -66,6 +75,19 @@ final class Boss: SKSpriteNode {
     
     // TODO: Boss move animation
     func createActions() {
+        let duration1 = 3.0
+        let moveRight1 = SKAction.moveTo(x: screenSize.width, duration: duration1)
+        let moveCenter1 = SKAction.moveTo(x: screenSize.width / 2, duration: duration1)
+        let moveLeft1 = SKAction.moveTo(x: 0, duration: duration1)
+        let moveRtoL1 = SKAction.sequence([moveRight1, moveCenter1, moveLeft1, moveCenter1])
+        infiniteMoveRL1 = SKAction.repeatForever(moveRtoL1)
+        
+        let duration2 = 0.5
+        let moveRight2 = SKAction.moveTo(x: screenSize.width, duration: duration2)
+        let moveCenter2 = SKAction.moveTo(x: screenSize.width / 2, duration: duration2)
+        let moveLeft2 = SKAction.moveTo(x: 0, duration: duration2)
+        let moveRtoL2 = SKAction.sequence([moveRight2, moveCenter2, moveLeft2])
+        infiniteMoveRL2 = SKAction.repeatForever(moveRtoL2)
         
     }
     

@@ -31,6 +31,7 @@ class GameScene: SKScene {
     
     let hud = Hud()
     var boss: Boss?
+    var bossNumber: Int = 2
     
     override func didMove(to view: SKView) {
         // Set gravity
@@ -247,20 +248,24 @@ extension GameScene: SKPhysicsContactDelegate {
             print(boss.shootCount)
             
             if boss.shootCount > boss.maxHp {
-//                let damageTexture = boss.createDamagaTexture()
-//                boss.addChild(damageTexture)
                 print("boss defeated")
+                explosion(targetNode: targetNode, isSmall: false)
+                secondBody.node?.removeFromParent()
+                self.boss = nil
+                self.hud.score += 10
+                self.bossNumber -= 1
+                isBossOnScreen = false
+                
             } else if boss.shootCount >= Int(Double(boss.maxHp) * 0.6) {
                 print("boss HP left 40%")
-                
                 if boss.bossState == .secondStep {
                     boss.bossState = .thirdStep
-                } else { return }
+                }
             } else if boss.shootCount >= Int(Double(boss.maxHp) * 0.2) {
                 print("boss HP left 80%")
                 if boss.bossState == .firstStep {
                     boss.bossState = .secondStep
-                } else { return }
+                }
             }
         }
     }
@@ -274,12 +279,14 @@ extension GameScene: SKPhysicsContactDelegate {
             addChild(boss)
             boss.appear()
             isBossOnScreen = true
-        } else if hud.score >= 50 {
-            boss = Boss(screenSize: size, level: 1)
-            guard let boss = boss else { return }
-            addChild(boss)
-            boss.appear()
-            isBossOnScreen = true
+        } else if hud.score >= 20 {
+            if bossNumber == 2 {
+                boss = Boss(screenSize: size, level: 1)
+                guard let boss = boss else { return }
+                addChild(boss)
+                boss.appear()
+                isBossOnScreen = true
+            }
         }
     }
 }
