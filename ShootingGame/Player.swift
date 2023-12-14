@@ -22,7 +22,7 @@ final class Player: SKSpriteNode {
             center: CGPoint(x: 0, y: 0)
         )
         self.physicsBody?.categoryBitMask = PhysicsCategory.player
-        self.physicsBody?.contactTestBitMask = PhysicsCategory.enemy | PhysicsCategory.meteor
+        self.physicsBody?.contactTestBitMask = PhysicsCategory.enemy | PhysicsCategory.meteor | PhysicsCategory.bossMissile
         self.physicsBody?.collisionBitMask = 0
         
         // Add Thruster

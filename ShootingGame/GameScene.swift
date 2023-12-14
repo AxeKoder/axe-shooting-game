@@ -22,6 +22,9 @@ class GameScene: SKScene {
     var enemyTimer = Timer()
     var enemyInterval: TimeInterval = 1.2
     
+    var bossFireTimer1 = Timer()
+    var bossFireTimer2 = Timer()
+    
     var player: Player!
     var prevLocation: CGPoint!
     
@@ -129,10 +132,45 @@ class GameScene: SKScene {
         return timer
     }
     
+    func setTimer(interval: TimeInterval, function: @escaping (CGPoint) -> Void) -> Timer {
+        let timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { _ in
+            guard let boss = self.boss else { return }
+            function(boss.position)
+        }
+        timer.tolerance = interval * 0.2
+        return timer
+    }
+    
     func playerFire() {
         let missile = player.createMissile()
         addChild(missile)
         player.fireMissile(missile: missile)
+    }
+    
+    func bossFire() {
+        guard let boss = boss else { return }
+        let missile = boss.createMissile()
+        addChild(missile)
+        let action = SKAction.sequence([SKAction.moveTo(y: -missile.size.width, duration: 3.0), SKAction.removeFromParent()])
+        missile.run(action)
+    }
+    
+    func bossCircleFire(bPoint: CGPoint) {
+        guard let boss = boss else { return }
+        
+        let separate: Double = 30.0
+        let missileSpeed: TimeInterval = 8.0
+        
+        for i in 0 ..< Int(separate) {
+            let r: CGFloat = size.height
+            let x: CGFloat = r * CGFloat(cos((Double(i) * 2 * Double.pi / separate)))
+            let y: CGFloat = r * CGFloat(sin((Double(i) * 2 * Double.pi / separate)))
+            
+            let action = SKAction.sequence([SKAction.move(to: CGPoint(x: bPoint.x + x, y: bPoint.y + y), duration: missileSpeed), SKAction.removeFromParent()])
+            let missile = boss.createMissile()
+            addChild(missile)
+            missile.run(action)
+        }
     }
     
     func explosion(targetNode: SKSpriteNode, isSmall: Bool) {
@@ -219,6 +257,15 @@ extension GameScene: SKPhysicsContactDelegate {
             playerDamageEffect()
             hud.subtractLive()
         }
+        if firstBody.categoryBitMask == PhysicsCategory.player && secondBody.categoryBitMask == PhysicsCategory.bossMissile {
+            guard let targetNode = secondBody.node as? SKSpriteNode else { return }
+            explosion(targetNode: targetNode, isSmall: true)
+            targetNode.removeFromParent()
+            
+            playerDamageEffect()
+            hud.subtractLive()
+        }
+        
         if firstBody.categoryBitMask == PhysicsCategory.missile && secondBody.categoryBitMask == PhysicsCategory.meteor {
             print("missile and meteor!")
             
@@ -260,11 +307,13 @@ extension GameScene: SKPhysicsContactDelegate {
                 print("boss HP left 40%")
                 if boss.bossState == .secondStep {
                     boss.bossState = .thirdStep
+                    bossFireTimer2 = setTimer(interval: 3.0, function: bossCircleFire(bPoint:))
                 }
             } else if boss.shootCount >= Int(Double(boss.maxHp) * 0.2) {
                 print("boss HP left 80%")
                 if boss.bossState == .firstStep {
                     boss.bossState = .secondStep
+                    bossFireTimer1 = setTimer(interval: 2.0, function: bossFire)
                 }
             }
         }
@@ -273,7 +322,7 @@ extension GameScene: SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         if isBossOnScreen {
             return
-        } else if hud.score >= 350 {
+        } else if hud.score >= 200 {
             boss = Boss(screenSize: size, level: 2)
             guard let boss = boss else { return }
             addChild(boss)

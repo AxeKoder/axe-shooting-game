@@ -37,6 +37,6 @@ struct PhysicsCategory {
     static let missile: UInt32 = 0x1 << 2
     static let enemy: UInt32 = 0x1 << 3
     static let boss: UInt32 = 0x1 << 4
-    static let bossMisile: UInt32 = 0x1 << 5
+    static let bossMissile: UInt32 = 0x1 << 5
     static let meteor: UInt32 = 0x1 << 6
 }
