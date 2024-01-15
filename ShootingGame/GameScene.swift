@@ -22,6 +22,9 @@ class GameScene: SKScene {
     var enemyTimer = Timer()
     var enemyInterval: TimeInterval = 1.2
     
+    var itemTimer = Timer()
+    var itemInterval: TimeInterval = 3.0
+    
     var bossFireTimer1 = Timer()
     var bossFireTimer2 = Timer()
     
@@ -53,6 +56,7 @@ class GameScene: SKScene {
         fireTimer = setTimer(interval: fireInterval, function: playerFire)
         meteorTimer = setTimer(interval: meteorInterval, function: addMeteor)
         enemyTimer = setTimer(interval: enemyInterval, function: addEnemy)
+        itemTimer = setTimer(interval: itemInterval, function: addItem)
         
         player = Player(screenSize: self.size)
         player.position = CGPoint(x: size.width / 2, y: player.size.height * 2)
@@ -123,6 +127,41 @@ class GameScene: SKScene {
         let moveAct = SKAction.moveTo(y: -enemy.size.height, duration: randSpeed)
         let removeAct = SKAction.removeFromParent()
         enemy.run(SKAction.sequence([moveAct, removeAct]))
+    }
+    
+    func addItem() {
+        let itemList = ["itemlightning", "itemshield", "itemstar"]
+        let randomItem = Int(arc4random_uniform(UInt32(itemList.count)))
+        let randomXPos = CGFloat(arc4random_uniform(UInt32(size.width)))
+        let randomSpeed = TimeInterval(arc4random_uniform(UInt32(10)) + 5)
+        
+        let texture = Atlas.gameobjects.textureNamed(itemList[randomItem])
+        let item = SKSpriteNode(texture: texture)
+        item.position = CGPoint(x: randomXPos, y: size.height + item.size.height)
+        item.zPosition = Layer.item
+        
+        // add physicsBody
+        item.physicsBody = SKPhysicsBody(circleOfRadius: item.size.height / 2)
+        item.physicsBody?.categoryBitMask = PhysicsCategory.item
+        item.physicsBody?.contactTestBitMask = 0
+        item.physicsBody?.collisionBitMask = 0
+        addChild(item)
+        
+        // switch with name
+        switch itemList[randomItem] {
+        case "itemlightning":
+            item.name = "lightning"
+        case "itemstar":
+            item.name = "star"
+        case "itemshield":
+            item.name = "shield"
+        default:
+            break
+        }
+        
+        let moveAction = SKAction.moveTo(y: -item.size.height, duration: randomSpeed)
+        let removeAction = SKAction.removeFromParent()
+        item.run(SKAction.sequence([moveAction, removeAction]))
     }
     
     func setTimer(interval: TimeInterval, function: @escaping () -> Void ) -> Timer {
@@ -264,6 +303,10 @@ extension GameScene: SKPhysicsContactDelegate {
             
             playerDamageEffect()
             hud.subtractLive()
+        }
+        
+        if firstBody.categoryBitMask == PhysicsCategory.player && secondBody.categoryBitMask == PhysicsCategory.item {
+            print("player and item!")
         }
         
         if firstBody.categoryBitMask == PhysicsCategory.missile && secondBody.categoryBitMask == PhysicsCategory.meteor {

@@ -23,6 +23,7 @@ struct Layer {
     static let playerMissile: CGFloat = 10
     static let player: CGFloat = 11
     static let enemy: CGFloat = 12
+    static let item: CGFloat = 13
     static let bossMissile: CGFloat = 14
     static let boss: CGFloat = 15
     static let hud: CGFloat = 30
@@ -39,4 +40,5 @@ struct PhysicsCategory {
     static let boss: UInt32 = 0x1 << 4
     static let bossMissile: UInt32 = 0x1 << 5
     static let meteor: UInt32 = 0x1 << 6
+    static let item: UInt32 = 0x1 << 7
 }
