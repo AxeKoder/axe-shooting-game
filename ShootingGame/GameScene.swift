@@ -31,6 +31,10 @@ class GameScene: SKScene {
     var player: Player!
     var prevLocation: CGPoint!
     
+    var shield = SKSpriteNode()
+    var isShieldOn: Bool = false
+    var shieldCount: Int = 0
+    
     var cameraNode = SKCameraNode()
     
     var isBossOnScreen = false
@@ -279,6 +283,18 @@ extension GameScene: SKPhysicsContactDelegate {
             secondBody = contact.bodyA
         }
         
+        if firstBody.categoryBitMask == PhysicsCategory.shield {
+            guard let targetNode = secondBody.node as? SKSpriteNode else { return }
+            
+            explosion(targetNode: targetNode, isSmall: true)
+            targetNode.removeFromParent()
+            shieldCount -= 1
+            if shieldCount <= 0 {
+                shield.removeFromParent()
+                isShieldOn = false
+            }
+        }
+        
         if firstBody.categoryBitMask == PhysicsCategory.player && secondBody.categoryBitMask == PhysicsCategory.meteor {
             print("player and meteor!")
             
@@ -306,7 +322,53 @@ extension GameScene: SKPhysicsContactDelegate {
         }
         
         if firstBody.categoryBitMask == PhysicsCategory.player && secondBody.categoryBitMask == PhysicsCategory.item {
-            print("player and item!")
+            guard let targetNode = secondBody.node as? SKSpriteNode else { return }
+            let name = targetNode.name
+            switch name {
+            case "lightning":
+                // proceed searching Nodes
+                enumerateChildNodes(withName: "enemy") { node, _ in
+                    if let enemyNode = node as? SKSpriteNode {
+                        self.explosion(targetNode: enemyNode, isSmall: true)
+                        enemyNode.removeFromParent()
+                        
+                        self.hud.score += 10
+                    }
+                }
+                enumerateChildNodes(withName: "meteor") { node, _ in
+                    if let meteorNode = node as? SKSpriteNode {
+                        self.explosion(targetNode: meteorNode, isSmall: true)
+                        meteorNode.removeFromParent()
+                    }
+                }
+                
+            case "star":
+                // speed up fire temporately
+                fireTimer.invalidate()
+                var starTime: Int = 100
+                fireTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { _ in
+                    starTime -= 1
+                    self.playerFire()
+                    if starTime <= 0 {
+                        self.fireTimer.invalidate()
+                        self.fireTimer = self.setTimer(interval: 0.4, function: self.playerFire)
+                    }
+                }
+                fireTimer.tolerance = 0.1
+                
+            case "shield":
+                // show up shield
+                if !isShieldOn {
+                    shield = player.createShield()
+                    player.addChild(shield)
+                    isShieldOn = true
+                    shieldCount = 1
+                }
+                
+            default:
+                break
+            }
+            targetNode.removeFromParent()
         }
         
         if firstBody.categoryBitMask == PhysicsCategory.missile && secondBody.categoryBitMask == PhysicsCategory.meteor {

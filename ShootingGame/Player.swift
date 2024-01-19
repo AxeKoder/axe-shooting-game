@@ -40,6 +40,24 @@ final class Player: SKSpriteNode {
         fatalError("required init has not been implemented")
     }
     
+    func createShield() -> SKSpriteNode {
+        let texture = Atlas.gameobjects.textureNamed("playerShield")
+        let shield = SKSpriteNode(texture: texture)
+        shield.position = CGPoint(x: 0, y: 0)
+        shield.zPosition = Layer.upper
+        shield.physicsBody = SKPhysicsBody(circleOfRadius: shield.size.height / 2)
+        shield.physicsBody?.categoryBitMask = PhysicsCategory.shield
+        shield.physicsBody?.contactTestBitMask = PhysicsCategory.enemy | PhysicsCategory.meteor | PhysicsCategory.bossMissile
+        shield.physicsBody?.collisionBitMask = 0
+        
+        let fadeOutAndIn = SKAction.sequence([
+            SKAction.fadeAlpha(to: 0.2, duration: 1.0),
+            SKAction.fadeAlpha(to: 1.0, duration: 1.0)
+        ])
+        shield.run(SKAction.repeatForever(fadeOutAndIn))
+        return shield
+    }
+    
     func createMissile() -> SKSpriteNode {
         let texture = Atlas.gameobjects.textureNamed("playerMissile")
         let missile = SKSpriteNode(texture: texture)
