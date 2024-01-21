@@ -76,7 +76,7 @@ final class Player: SKSpriteNode {
     
     func fireMissile(missile: SKSpriteNode) {
         var actionArray = [SKAction]()
-        actionArray.append(SKAction.moveTo(y: self.screenSize.height + missile.size.height, duration: 0.4))
+        actionArray.append(SKAction.moveBy(x: 0, y: screenSize.height + missile.size.height, duration: 0.4))
         actionArray.append(SKAction.removeFromParent())
         missile.run(SKAction.sequence(actionArray))
     }

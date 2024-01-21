@@ -346,7 +346,7 @@ extension GameScene: SKPhysicsContactDelegate {
                 // speed up fire temporately
                 fireTimer.invalidate()
                 var starTime: Int = 100
-                fireTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { _ in
+                fireTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
                     starTime -= 1
                     self.playerFire()
                     if starTime <= 0 {
