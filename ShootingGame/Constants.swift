@@ -27,6 +27,7 @@ struct Layer {
     static let bossMissile: CGFloat = 14
     static let boss: CGFloat = 15
     static let hud: CGFloat = 30
+    static let gameover: CGFloat = 40
 }
 
 struct Atlas {

@@ -36,6 +36,7 @@ class GameScene: SKScene {
     var shieldCount: Int = 0
     
     var cameraNode = SKCameraNode()
+    var continueScreen = SKSpriteNode()
     
     var isBossOnScreen = false
     
@@ -266,7 +267,133 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        prevLocation = touches.first?.location(in: self)
+        let touch = touches.first
+        if let location = touch?.location(in: self) {
+            prevLocation = location
+            
+            let nodesArray = nodes(at: location)
+            if let nodeName = nodesArray.first?.name {
+                switch nodeName {
+                case "restartBtn":
+                    restart()
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    
+    // MARK: - Show Game Over
+    func gameover() {
+        enumerateChildNodes(withName: "flashNode") { node, _ in
+            node.removeFromParent()
+        }
+        
+        itemTimer.invalidate()
+        fireTimer.invalidate()
+        enemyTimer.invalidate()
+        meteorTimer.invalidate()
+        
+        if isBossOnScreen {
+            bossFireTimer1.invalidate()
+            bossFireTimer2.invalidate()
+        }
+        
+        saveHighscore()
+        
+        continueScreen = createContinueScreen()
+        self.addChild(continueScreen)
+        self.isPaused = true
+    }
+    
+    func createContinueScreen() -> SKSpriteNode {
+        continueScreen = SKSpriteNode(color: SKColor.darkGray, size: size)
+        continueScreen.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        continueScreen.zPosition = Layer.gameover
+        continueScreen.alpha = 0.9
+        
+        let continueLabel = SKLabelNode(text: "Continue?")
+        continueLabel.fontName = "Minercraftory"
+        continueLabel.fontSize = 40
+        continueLabel.position = CGPoint(x: 0, y: size.height * 0.35)
+        continueLabel.zPosition = Layer.upper
+        continueScreen.addChild(continueLabel)
+        
+        let scoreLabel = SKLabelNode(text: String(format: "Score: %d", hud.score))
+        scoreLabel.fontName = "Minercraftory"
+        scoreLabel.fontSize = 25
+        scoreLabel.position = CGPoint(x: 0, y: size.height * 0.2)
+        scoreLabel.zPosition = Layer.upper
+        continueScreen.addChild(scoreLabel)
+        
+        let highScoreLabel = SKLabelNode(text: String(format: "High Score: %d", UserDefaults.standard.integer(forKey: "highScore")))
+        highScoreLabel.fontName = "Minercraftory"
+        highScoreLabel.fontSize = 25
+        highScoreLabel.position = CGPoint(x: 0, y: size.height * 0.13)
+        highScoreLabel.zPosition = Layer.upper
+        continueScreen.addChild(highScoreLabel)
+        
+        let restartTexture = Atlas.gameobjects.textureNamed("restartBtn")
+        let restartBtn = SKSpriteNode(texture: restartTexture)
+        restartBtn.name = "restartBtn"
+        restartBtn.position = CGPoint(x: 0, y: size.height * -0.05)
+        restartBtn.zPosition = Layer.upper
+        continueScreen.addChild(restartBtn)
+        
+        return continueScreen
+    }
+    
+    func restart() {
+        continueScreen.removeFromParent()
+        isPaused = false
+        
+        hud.addLives()
+        
+        meteorTimer = setTimer(interval: meteorInterval, function: addMeteor)
+        enemyTimer = setTimer(interval: enemyInterval, function: addEnemy)
+        itemTimer = setTimer(interval: itemInterval, function: addItem)
+        fireTimer = setTimer(interval: fireInterval, function: playerFire)
+        
+        if boss?.bossState == .secondStep {
+            bossFireTimer1 = setTimer(interval: 2.0, function: bossFire)
+        } else if boss?.bossState == .thirdStep {
+            bossFireTimer1 = setTimer(interval: 2.0, function: bossFire)
+            bossFireTimer2 = setTimer(interval: 3.0, function: bossCircleFire(bPoint:))
+        }
+    }
+    
+    func saveHighscore() {
+        let userDefaults = UserDefaults.standard
+        let highScore = userDefaults.integer(forKey: "highScore")
+        
+        if hud.score > highScore {
+            userDefaults.set(hud.score, forKey: "highScore")
+        }
+        userDefaults.synchronize()
+    }
+    
+    func stageClear() {
+        meteorTimer.invalidate()
+        enemyTimer.invalidate()
+        itemTimer.invalidate()
+        
+        meteorInterval -= 0.5
+        enemyInterval -= 0.5
+        itemInterval += 0.5
+        
+        meteorTimer = setTimer(interval: meteorInterval, function: addMeteor)
+        enemyTimer = setTimer(interval: enemyInterval, function: addEnemy)
+        itemTimer = setTimer(interval: itemInterval, function: addItem)
+    }
+    
+    func gameClear() {
+        saveHighscore()
+        
+        let transition = SKTransition.crossFade(withDuration: 5.0)
+        let creditScene = ClearScene(size: size)
+        creditScene.scaleMode = .aspectFit
+        view?.presentScene(creditScene, transition: transition)
     }
 }
 
@@ -408,6 +535,13 @@ extension GameScene: SKPhysicsContactDelegate {
                 self.bossNumber -= 1
                 isBossOnScreen = false
                 
+                // 보스가 남아있으면 스테이지 클리어, 없으면 게임 클리어
+                if bossNumber > 0 {
+                    stageClear()
+                } else {
+                    gameClear()
+                }
+                
             } else if boss.shootCount >= Int(Double(boss.maxHp) * 0.6) {
                 print("boss HP left 40%")
                 if boss.bossState == .secondStep {
@@ -421,6 +555,10 @@ extension GameScene: SKPhysicsContactDelegate {
                     bossFireTimer1 = setTimer(interval: 2.0, function: bossFire)
                 }
             }
+        }
+        
+        if hud.liveArray.isEmpty {
+            gameover()
         }
     }
     
