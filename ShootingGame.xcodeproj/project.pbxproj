@@ -26,6 +26,12 @@
 		49981E542B21799500329895 /* Minercraftory.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 49981E532B21799500329895 /* Minercraftory.ttf */; };
 		499D134C2AFC938100F887B5 /* playerThruster.sks in Resources */ = {isa = PBXBuildFile; fileRef = 499D134B2AFC938100F887B5 /* playerThruster.sks */; };
 		499D134E2AFC94D300F887B5 /* enemyThruster.sks in Resources */ = {isa = PBXBuildFile; fileRef = 499D134D2AFC94D300F887B5 /* enemyThruster.sks */; };
+		49A3BA6A2B69F30B005C554B /* fxExplosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 49A3BA642B69F30A005C554B /* fxExplosion.mp3 */; };
+		49A3BA6B2B69F30B005C554B /* bgmMain.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 49A3BA652B69F30B005C554B /* bgmMain.mp3 */; };
+		49A3BA6C2B69F30B005C554B /* bgmTitle.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 49A3BA662B69F30B005C554B /* bgmTitle.mp3 */; };
+		49A3BA6D2B69F30B005C554B /* fxBossFire.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 49A3BA672B69F30B005C554B /* fxBossFire.mp3 */; };
+		49A3BA6E2B69F30B005C554B /* fxPlayerFire.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 49A3BA682B69F30B005C554B /* fxPlayerFire.mp3 */; };
+		49A3BA6F2B69F30B005C554B /* fxItem.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 49A3BA692B69F30B005C554B /* fxItem.mp3 */; };
 		EC72CFEB2B25CB61002BA17D /* Boss.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC72CFEA2B25CB61002BA17D /* Boss.swift */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +57,12 @@
 		49981E572B217AB200329895 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		499D134B2AFC938100F887B5 /* playerThruster.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = playerThruster.sks; sourceTree = "<group>"; };
 		499D134D2AFC94D300F887B5 /* enemyThruster.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = enemyThruster.sks; sourceTree = "<group>"; };
+		49A3BA642B69F30A005C554B /* fxExplosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fxExplosion.mp3; sourceTree = "<group>"; };
+		49A3BA652B69F30B005C554B /* bgmMain.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bgmMain.mp3; sourceTree = "<group>"; };
+		49A3BA662B69F30B005C554B /* bgmTitle.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bgmTitle.mp3; sourceTree = "<group>"; };
+		49A3BA672B69F30B005C554B /* fxBossFire.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fxBossFire.mp3; sourceTree = "<group>"; };
+		49A3BA682B69F30B005C554B /* fxPlayerFire.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fxPlayerFire.mp3; sourceTree = "<group>"; };
+		49A3BA692B69F30B005C554B /* fxItem.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fxItem.mp3; sourceTree = "<group>"; };
 		EC72CFEA2B25CB61002BA17D /* Boss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Boss.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,8 +117,22 @@
 				493A4DE32B0DB735007302A1 /* explosion.sks */,
 				493A4DE52B0DB7F5007302A1 /* hit.sks */,
 				49981E532B21799500329895 /* Minercraftory.ttf */,
+				49A3BA702B69F321005C554B /* Sounds */,
 			);
 			path = ShootingGame;
+			sourceTree = "<group>";
+		};
+		49A3BA702B69F321005C554B /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				49A3BA652B69F30B005C554B /* bgmMain.mp3 */,
+				49A3BA662B69F30B005C554B /* bgmTitle.mp3 */,
+				49A3BA672B69F30B005C554B /* fxBossFire.mp3 */,
+				49A3BA642B69F30A005C554B /* fxExplosion.mp3 */,
+				49A3BA692B69F30B005C554B /* fxItem.mp3 */,
+				49A3BA682B69F30B005C554B /* fxPlayerFire.mp3 */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,17 +193,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49A3BA6A2B69F30B005C554B /* fxExplosion.mp3 in Resources */,
 				49883FEB2ADFAA31005A6511 /* Main.storyboard in Resources */,
 				493A4DE62B0DB7F5007302A1 /* hit.sks in Resources */,
 				49883FE22ADFAA31005A6511 /* GameScene.sks in Resources */,
+				49A3BA6D2B69F30B005C554B /* fxBossFire.mp3 in Resources */,
 				49883FED2ADFAA33005A6511 /* Assets.xcassets in Resources */,
 				493A4DE42B0DB735007302A1 /* explosion.sks in Resources */,
 				49981E542B21799500329895 /* Minercraftory.ttf in Resources */,
 				499D134C2AFC938100F887B5 /* playerThruster.sks in Resources */,
 				49883FF02ADFAA33005A6511 /* LaunchScreen.storyboard in Resources */,
+				49A3BA6F2B69F30B005C554B /* fxItem.mp3 in Resources */,
 				49883FF72ADFB768005A6511 /* starfield.sks in Resources */,
 				49883FE42ADFAA31005A6511 /* Actions.sks in Resources */,
+				49A3BA6B2B69F30B005C554B /* bgmMain.mp3 in Resources */,
+				49A3BA6C2B69F30B005C554B /* bgmTitle.mp3 in Resources */,
 				499D134E2AFC94D300F887B5 /* enemyThruster.sks in Resources */,
+				49A3BA6E2B69F30B005C554B /* fxPlayerFire.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

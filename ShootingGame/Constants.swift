@@ -44,3 +44,15 @@ struct PhysicsCategory {
     static let meteor: UInt32 = 0x1 << 6
     static let item: UInt32 = 0x1 << 7
 }
+
+struct BGM {
+    static let title = "bgmTitle.mp3"
+    static let main = "bgmMain.mp3"
+}
+
+struct SoundFx {
+    static let item = SKAction.playSoundFileNamed("fxItem.mp3", waitForCompletion: false)
+    static let explosion = SKAction.playSoundFileNamed("fxExplosion.mp3", waitForCompletion: false)
+    static let bossFire = SKAction.playSoundFileNamed("fxBossFire.mp3", waitForCompletion: false)
+    static let playerFire = SKAction.playSoundFileNamed("fxPlayerFire.mp3", waitForCompletion: false)
+}

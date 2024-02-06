@@ -7,6 +7,7 @@
 
 import SpriteKit
 import GameplayKit
+import AVKit
 
 class GameScene: SKScene {
     
@@ -49,6 +50,12 @@ class GameScene: SKScene {
         self.physicsWorld.contactDelegate = self
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         
+        // BGM
+        let bgmPlayer = SKAudioNode(fileNamed: BGM.main)
+        bgmPlayer.autoplayLooped = true
+        bgmPlayer.run(SKAction.changeVolume(to: Float(0.2), duration: 0))
+        addChild(bgmPlayer)
+        
         guard let starfield = SKEmitterNode(fileNamed: "starfield") else { return }
         starfield.position = CGPoint(x: size.width / 2, y: size.height)
         starfield.zPosition = 0
@@ -72,8 +79,6 @@ class GameScene: SKScene {
         cameraNode.position.x = size.width / 2
         cameraNode.position.y = size.height / 2
         addChild(cameraNode)
-        
-
     }
     
     func addMeteor() {
@@ -189,6 +194,9 @@ class GameScene: SKScene {
         let missile = player.createMissile()
         addChild(missile)
         player.fireMissile(missile: missile)
+        
+        let playerFireSound = SoundFx.playerFire
+        run(playerFireSound)
     }
     
     func bossFire() {
@@ -197,6 +205,8 @@ class GameScene: SKScene {
         addChild(missile)
         let action = SKAction.sequence([SKAction.moveTo(y: -missile.size.width, duration: 3.0), SKAction.removeFromParent()])
         missile.run(action)
+        
+        run(SoundFx.bossFire)
     }
     
     func bossCircleFire(bPoint: CGPoint) {
@@ -215,6 +225,8 @@ class GameScene: SKScene {
             addChild(missile)
             missile.run(action)
         }
+        
+        run(SoundFx.bossFire)
     }
     
     func explosion(targetNode: SKSpriteNode, isSmall: Bool) {
@@ -228,6 +240,7 @@ class GameScene: SKScene {
         explosion.position = targetNode.position
         explosion.zPosition = targetNode.zPosition
         addChild(explosion)
+        run(SoundFx.explosion)
         run(SKAction.wait(forDuration: 2)) {
             explosion.removeFromParent()
         }
@@ -495,6 +508,7 @@ extension GameScene: SKPhysicsContactDelegate {
             default:
                 break
             }
+            run(SoundFx.item)
             targetNode.removeFromParent()
         }
         
