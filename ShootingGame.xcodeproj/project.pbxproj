@@ -32,10 +32,12 @@
 		49A3BA6D2B69F30B005C554B /* fxBossFire.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 49A3BA672B69F30B005C554B /* fxBossFire.mp3 */; };
 		49A3BA6E2B69F30B005C554B /* fxPlayerFire.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 49A3BA682B69F30B005C554B /* fxPlayerFire.mp3 */; };
 		49A3BA6F2B69F30B005C554B /* fxItem.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 49A3BA692B69F30B005C554B /* fxItem.mp3 */; };
+		C7B5804564AFC3DC0B9C06E1 /* Pods_ShootingGame.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1228C9F8BFBC1A0C20368DCE /* Pods_ShootingGame.framework */; };
 		EC72CFEB2B25CB61002BA17D /* Boss.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC72CFEA2B25CB61002BA17D /* Boss.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1228C9F8BFBC1A0C20368DCE /* Pods_ShootingGame.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShootingGame.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		493A4DE32B0DB735007302A1 /* explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = explosion.sks; sourceTree = "<group>"; };
 		493A4DE52B0DB7F5007302A1 /* hit.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = hit.sks; sourceTree = "<group>"; };
 		49430B3C2B632DDC00D9B565 /* ClearScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearScene.swift; sourceTree = "<group>"; };
@@ -63,6 +65,8 @@
 		49A3BA672B69F30B005C554B /* fxBossFire.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fxBossFire.mp3; sourceTree = "<group>"; };
 		49A3BA682B69F30B005C554B /* fxPlayerFire.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fxPlayerFire.mp3; sourceTree = "<group>"; };
 		49A3BA692B69F30B005C554B /* fxItem.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fxItem.mp3; sourceTree = "<group>"; };
+		626BF10FA6C707F9541DEF1A /* Pods-ShootingGame.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShootingGame.debug.xcconfig"; path = "Target Support Files/Pods-ShootingGame/Pods-ShootingGame.debug.xcconfig"; sourceTree = "<group>"; };
+		67B607702822B841CFB2A634 /* Pods-ShootingGame.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShootingGame.release.xcconfig"; path = "Target Support Files/Pods-ShootingGame/Pods-ShootingGame.release.xcconfig"; sourceTree = "<group>"; };
 		EC72CFEA2B25CB61002BA17D /* Boss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Boss.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,17 +75,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7B5804564AFC3DC0B9C06E1 /* Pods_ShootingGame.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1EF6DBFA79B50C4D42FE5100 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1228C9F8BFBC1A0C20368DCE /* Pods_ShootingGame.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		49883FD32ADFAA31005A6511 = {
 			isa = PBXGroup;
 			children = (
 				49883FDE2ADFAA31005A6511 /* ShootingGame */,
 				49883FDD2ADFAA31005A6511 /* Products */,
+				FAADD74DDD8CF5D3267FDF6E /* Pods */,
+				1EF6DBFA79B50C4D42FE5100 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -135,6 +150,16 @@
 			path = Sounds;
 			sourceTree = "<group>";
 		};
+		FAADD74DDD8CF5D3267FDF6E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				626BF10FA6C707F9541DEF1A /* Pods-ShootingGame.debug.xcconfig */,
+				67B607702822B841CFB2A634 /* Pods-ShootingGame.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -142,6 +167,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 49883FF32ADFAA33005A6511 /* Build configuration list for PBXNativeTarget "ShootingGame" */;
 			buildPhases = (
+				C86FDB3C5EB0BD7A5F8E8828 /* [CP] Check Pods Manifest.lock */,
 				49883FD82ADFAA31005A6511 /* Sources */,
 				49883FD92ADFAA31005A6511 /* Frameworks */,
 				49883FDA2ADFAA31005A6511 /* Resources */,
@@ -214,6 +240,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C86FDB3C5EB0BD7A5F8E8828 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ShootingGame-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		49883FD82ADFAA31005A6511 /* Sources */ = {
@@ -370,6 +421,7 @@
 		};
 		49883FF42ADFAA33005A6511 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 626BF10FA6C707F9541DEF1A /* Pods-ShootingGame.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -400,6 +452,7 @@
 		};
 		49883FF52ADFAA33005A6511 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 67B607702822B841CFB2A634 /* Pods-ShootingGame.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
